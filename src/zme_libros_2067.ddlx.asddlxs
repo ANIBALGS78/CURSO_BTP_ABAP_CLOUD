@@ -1,0 +1,54 @@
+@Metadata.layer: #CORE
+@UI.headerInfo : { typeName: 'Libro',
+                   typeNamePlural: 'Libros',
+                   title : { type: #STANDARD,
+                             value: 'Titulo' },
+                   description : { type: #STANDARD,
+                                   value: 'Autor' },
+                   imageUrl: 'ImagenLibro' }
+@Search.searchable: true
+annotate entity ZCDS_LIBROS_2067 with
+{
+
+  @UI.facet: [{ id: 'DetalleLibro', label: 'Detalles del Libro', type: #COLLECTION, position: 10 },
+              { id: 'Libro', parentId: 'DetalleLibro', label: 'Libro detalle', type: #FIELDGROUP_REFERENCE,
+                    targetQualifier: 'DetalleLibro', position: 10 },
+              { id: 'Cliente', label: 'Clientes', type: #LINEITEM_REFERENCE, targetElement: '_Clientes', position: 20 }
+             ]
+  @UI.fieldGroup: [{ qualifier: 'DetalleLibro'}]
+  IdLibro;
+  @UI.fieldGroup: [{ qualifier: 'DetalleLibro' }]
+  Paginas;
+  @UI.fieldGroup: [{ qualifier: 'DetalleLibro' }]
+  Formato;
+
+  @UI.lineItem: [{ position: 20 }]
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'ZCDS_CATEGORIAS_2067', element: 'BiCateg' }}]
+  @UI.selectionField: [{ position: 10 }]
+  BiCateg;
+  @UI.lineItem: [{ position: 30 }]
+  @UI.selectionField: [{ position: 20 }]
+  Titulo;
+  @UI.lineItem: [{ position: 40 }]
+  Autor;
+  @UI.lineItem: [{ position: 50 }]
+  @Search: {
+      defaultSearchElement: true,
+      ranking: #MEDIUM,
+      fuzzinessThreshold: 0.8
+  }
+  Editorial;
+  @UI.lineItem: [{ position: 60 }]
+  Idioma;
+
+  @UI.lineItem: [{ position: 80 }]
+  Precio;
+  @UI.lineItem: [{ position: 90 }]
+//  @UI.lineItem: [{label: 'Mon'}]
+  Moneda; 
+  @UI.connectedFields: [{ hidden: true }]
+  ImagenLibro;
+  @UI.lineItem: [{ position: 110, criticality: 'Ventas'}]
+  Ventas;
+    
+}
